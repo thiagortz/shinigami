@@ -7,6 +7,6 @@ RUN gradle build
 FROM openjdk:11-jre-slim
 
 COPY --from=build /home/gradle/src/build/libs/*.jar /app/pubsub-consumer.jar
-COPY gcloud.json /app/gcloud.json
+#COPY gcloud.json /app/gcloud.json
 
 ENTRYPOINT ["java", "-jar", "/app/pubsub-consumer.jar"]
