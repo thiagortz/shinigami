@@ -2,6 +2,8 @@ package com.days;
 
 import com.days.publishers.EventPublisher;
 import com.google.pubsub.v1.ProjectTopicName;
+import spark.Request;
+import spark.Response;
 
 import java.io.IOException;
 import java.util.concurrent.ExecutionException;
@@ -13,22 +15,29 @@ public class MainPublisher {
     private static final String TOPIC_ID = System.getenv("TOPIC_ID");
 
     public static void main(String[] args) {
-        post("/publish", (req, res) -> {
+        post("/publish", "application/json", MainPublisher::handle);
+    }
+
+    private static Object handle(Request req, Response res) {
+        try {
+            int total = 10000;
 
             ProjectTopicName topicName = ProjectTopicName.of(PROJECT_ID, TOPIC_ID);
 
             EventPublisher pub = new EventPublisher(topicName);
 
-            try {
+            String numberEvents = req.queryParams("numberEvents");
 
-                pub.publisher(10000);
+            if (numberEvents != null)
+                total = Integer.parseInt(numberEvents);
 
-            } catch (IOException | InterruptedException | ExecutionException e) {
-                e.printStackTrace();
-            }
+            pub.publisher(total);
 
             return "OK";
 
-        });
+        } catch (IOException | InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+            return "NOT OK";
+        }
     }
 }

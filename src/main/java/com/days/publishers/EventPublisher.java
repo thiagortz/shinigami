@@ -21,7 +21,7 @@ public class EventPublisher {
     private static Logger LOGGER = LoggerFactory.getLogger(EventPublisher.class);
 
 
-    public  EventPublisher(ProjectTopicName topicName){
+    public EventPublisher(ProjectTopicName topicName) {
         this.topicName = topicName;
     }
 
@@ -33,10 +33,25 @@ public class EventPublisher {
             // Create a publisher instance with default settings bound to the topic
             publisher = Publisher.newBuilder(topicName).build();
 
-            LOGGER.info("publishing the total of " + messageCount +" messages");
+            LOGGER.info("publishing the total of " + messageCount + " messages");
 
             for (int i = 0; i < messageCount; i++) {
-                String message = "message-" + i;
+                String message = "{\"OperationType\": \"Authorization\", \"MtiCode\": 000, \"ProcessingCode\": \"00\"," +
+                        " \"OperationStatus\": \"Used\", \"MessageAmount\": 564.48, " +
+                        "\"OriginalMessageAmount\": 564.48, \"AccountType\": \"Debit\", \"TransactionDate\": \"000\", " +
+                        "\"LocalDate\": \"000\", \"Currency\": 000, \"PosEntryMode\": \"IntegratedCircuit\"," +
+                        " \"ResponseCode\": \"00\", \"AuthorizationCode\": \"430292\", \"IsSms\": 0, \"CardAcceptorTerminalCode\": \"0000\"," +
+                        " \"InitiatorTransactionKey\": \"0e847d2b-59dc\", \"ConfirmationDate\": null, \"IssuerCountryCode\": 76, " +
+                        "\"OperationKey\": \"d57dbdac\", \"TransactionKey\": \"69fca4a3\"," +
+                        " \"MaskedPan\": \"be488238-cbff-4964-a233-01addb8c500d\", \"Bin\": \"dffb8691\", " +
+                        "\"CardBrandName\": \"MasterCard\", \"ExpirationDate\": \"2203\", \"CardToken\": \"000\", " +
+                        "\"InstallmentType\": \"Merchant\", \"NumberOfInstallments\": 6, \"CardAcceptorCode\": \"28398def\"," +
+                        " \"CardAcceptorName\": \"ddeba4ec\", \"MccCode\": 742, \"CityName\": \"Bauru\"," +
+                        " \"StateName\": \"S\\u00e3o Paulo\", \"CountryCode\": \"BR\", \"AcquiringInstitutionCode\": \"014788\"," +
+                        " \"ForwardingInstitutionCode\": \"014788\", \"PaymentSchemeBusinessModel\": \"FullAcquirer\", " +
+                        "\"MerchantKey\": \"c79cf47c\", \"MerchantTaxId\": \"9409122c\"," +
+                        " \"PointOfInteractionKey\": \"713e4026\", " +
+                        "\"OrderIdentification\": null, \"SettlementDate\": 000}\n" + " Count: " + i;
 
                 // convert message to bytes
                 ByteString data = ByteString.copyFromUtf8(message);
