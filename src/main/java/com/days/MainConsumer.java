@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
 public class MainConsumer {
 
     private static final String PROJECT_ID = System.getenv("GCP_PROJECT");
-    private static final String SUBSCRIPTION_ID = "shinigami-sub";
+    private static final String SUBSCRIPTION_ID = System.getenv("SUBSCRIPTION_ID");
     private static Logger LOGGER = LoggerFactory.getLogger(MainConsumer.class);
 
 
